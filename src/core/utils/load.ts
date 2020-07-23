@@ -2,11 +2,11 @@
  * @Author: Just be free
  * @Date:   2020-07-22 09:59:15
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-22 15:36:08
+ * @Last Modified time: 2020-07-23 11:36:07
  * @E-mail: justbefree@126.com
  */
 
-export const loadPlugin = (path: string) => {
+export const loadApplication = (path: string) => {
   return import(`@/plugins/${path}/index.ts`);
 };
 

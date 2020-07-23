@@ -2,32 +2,32 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-23 10:52:53
+ * @Last Modified time: 2020-07-23 11:42:18
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
 // import { StoreOptions, ModuleTree, Module } from "vuex/types";
-import { PluginObject } from "./types";
+import { ApplicationObject } from "./types";
 import { Callback } from "../types";
 // import { AsyncComponent } from "vue/types";
 import { RouteConfig } from "vue-router";
 // import { getEnvironment } from "@/config";
 // const debug = getEnvironment() !== "production";
-import { loadPlugin } from "../utils/load";
+import { loadApplication } from "../utils/load";
 import Vue from "vue";
 // import Vuex from "vuex";
 import VueRouter from "vue-router";
-class PluginManager {
+class Application {
   // private _store: StoreOptions<any>;
   // private _tempModules: ModuleTree<any>;
-  private _plugins: Array<PluginObject>;
+  private _applications: Array<ApplicationObject>;
   // private _components: Array<AsyncComponent>;
   // private _lazyLoadComponents: {};
   private _routes: Array<RouteConfig>;
   // private _i18n: {};
   // private callbackForEveryComponent: Callback;
   constructor() {
-    this._plugins = [];
+    this._applications = [];
     // this._components = [];
     // this._lazyLoadComponents = {};
     this._routes = [];
@@ -108,8 +108,8 @@ class PluginManager {
   // private installVuex(): void {
   //   Vue.use(Vuex);
   // }
-  public addPlugin(plugin: PluginObject): void {
-    this._plugins.push(plugin);
+  public addApplication(application: ApplicationObject): void {
+    this._applications.push(application);
   }
   // public setComponents(conmponents: Array<AsyncComponent>): void {
   //   this._components = conmponents;
@@ -156,15 +156,15 @@ class PluginManager {
   //   return this._i18n[lang];
   // }
 
-  public register(pluginName: string): Promise<any> | boolean {
-    if (!pluginName) {
+  public register(applicationName: string): Promise<any> | boolean {
+    if (!applicationName) {
       return false;
     }
-    return loadPlugin(pluginName)
+    return loadApplication(applicationName)
       .then(module => {
-        const plugin = module.default;
+        const application = module.default;
         // this.registerStore(plugin.name, plugin.global);
-        this.addPlugin(plugin);
+        this.addApplication(application);
         // this.setI18n(plugin.name, plugin.i18n, plugin.languages);
         // if (
         //   Object.prototype.toString.call(plugin.components) === "[object Array]"
@@ -178,9 +178,9 @@ class PluginManager {
         // };
         // this.setLazyLoadComponents(lazyLoadCoponents);
         // }
-        const routes = [...this.getRoutes(), ...plugin.routes];
+        const routes = [...this.getRoutes(), ...application.routes];
         this.setRoutes(routes);
-        return Promise.resolve(plugin);
+        return Promise.resolve(application);
       })
       .catch(err => {
         console.log("load plugin fail ", err);
@@ -233,4 +233,4 @@ class PluginManager {
   }
 }
 
-export default PluginManager;
+export default Application;
