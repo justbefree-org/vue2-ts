@@ -7,7 +7,7 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/plugins/common/hello-world";
+import HelloWorld from "@/plugins/test/hello-world";
 
 export default {
   name: "Home",

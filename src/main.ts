@@ -1,13 +1,12 @@
+import { default as Platform } from "@/core/Platform";
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
-import router from "./router";
 import store from "./store";
 
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+const p = new Platform({ id: "#app", App });
+p.install("test");
+p.startUp();
+console.log(p);
