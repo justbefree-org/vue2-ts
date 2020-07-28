@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 10:02:44
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-23 11:43:16
+ * @Last Modified time: 2020-07-27 18:52:21
  * @E-mail: justbefree@126.com
  */
 import Vue from "vue";
@@ -22,9 +22,7 @@ class Platform {
   private getAppStack() {
     return this._appStack;
   }
-  private registerApplication(
-    app: Promise<any> | boolean
-  ): Platform {
+  private registerApplication(app: Promise<any> | boolean): Platform {
     this._appStack.push(app);
     return this;
   }
@@ -37,12 +35,13 @@ class Platform {
       app.install();
       // const language = pluginManager.getLanguage("zh-CN");
       const router = app.getRouter();
-      // const store = pluginManager.getStore();
+      const store = app.getStore();
+      console.log("注入前的store", store);
       // const i18n = i18nInstance.setup(pluginManager, router, language);
       Vue.config.productionTip = false;
       /* eslint-disable no-new */
       new Vue({
-        // store,
+        store,
         router,
         // i18n,
         render: h => h(this._App)

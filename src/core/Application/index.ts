@@ -2,23 +2,25 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-23 11:42:18
+ * @Last Modified time: 2020-07-28 14:07:17
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
-// import { StoreOptions, ModuleTree, Module } from "vuex/types";
+import { StoreOptions, ModuleTree, Module } from "vuex/types";
+import { default as StoreManager } from "../StoreManager";
 import { ApplicationObject } from "./types";
 import { Callback } from "../types";
 // import { AsyncComponent } from "vue/types";
 import { RouteConfig } from "vue-router";
-// import { getEnvironment } from "@/config";
-// const debug = getEnvironment() !== "production";
+import { getEnvironment } from "@/config";
+const debug = getEnvironment() !== "production";
 import { loadApplication } from "../utils/load";
+import { hasProperty } from "../utils";
 import Vue from "vue";
-// import Vuex from "vuex";
+import Vuex from "vuex";
 import VueRouter from "vue-router";
 class Application {
-  // private _store: StoreOptions<any>;
+  private _store: StoreOptions<any>;
   // private _tempModules: ModuleTree<any>;
   private _applications: Array<ApplicationObject>;
   // private _components: Array<AsyncComponent>;
@@ -30,84 +32,50 @@ class Application {
     this._applications = [];
     // this._components = [];
     // this._lazyLoadComponents = {};
+    this._store = {};
     this._routes = [];
     // this.callbackForEveryComponent = function () {};
     this.installVueRouter();
-    // this.installVuex();
+    this.installVuex();
   }
-  // private registerModule(
-  //   name: string,
-  //   module: StoreOptions<any>,
-  //   isGlobal = false
-  // ): void {
-  //   if (isGlobal) {
-  //     this._store = module;
-  //     // 这行代码必须加
-  //     // 极少数情况下所有子节点先加载完毕，最后加载根节点后导致根节点上并未挂载子节点
-  //     const modules: ModuleTree<any> = {
-  //       ...this._store["modules"],
-  //       ...this._tempModules
-  //     };
-  //     // this._store["modules"] = {
-  //     //   ...this._store["modules"],
-  //     //   ...this._tempModules
-  //     // };
-  //     this._store["modules"] = modules;
-  //     console.log("The root store has been registered");
-  //   } else {
-  //     // 由于每个模块是异步加载，所以防止根模块节点不存在，需要临时存储子模块，然后待根模块加载进来再进行子模块挂载
-  //     if (!this._store["modules"]) {
-  //       this._tempModules[name] = module;
-  //       console.log(`The ${name} module has been registered`);
-  //     } else {
-  //       this._store["modules"] = {
-  //         ...this._store["modules"],
-  //         ...this._tempModules
-  //       };
-  //       this._store["modules"][name] = module;
-  //       // 用完之后记得清除掉
-  //       this._tempModules = {};
-  //       console.log(`The ${name} module has been registered`);
-  //     }
-  //   }
-  // }
-  // private processingModule(
-  //   name: string,
-  //   singleStoreArr = [],
-  //   isGlobal: boolean = false
-  // ): void {
-  //   const store = {
-  //     namespaced: true,
-  //     state: {},
-  //     actions: {},
-  //     mutations: {},
-  //     getters: {}
-  //   };
-  //   if (isGlobal) {
-  //     delete store["namespaced"];
-  //     store["modules"] = {};
-  //     store["strict"] = debug;
-  //   }
-  //   singleStoreArr.forEach(singleStore => {
-  //     store["state"] = { ...store["state"], ...singleStore.getState() };
-  //     store["mutations"] = {
-  //       ...store["mutations"],
-  //       ...singleStore.getMutation()
-  //     };
-  //     store["actions"] = { ...store["actions"], ...singleStore.getAction() };
-  //     store["getters"] = { ...store["getters"], ...singleStore.getGetter() };
-  //   });
-  //   this.registerModule(name, store, isGlobal);
-  // }
-  // public getStoreObject(): StoreOptions<any> {
-  //   return this._store;
-  // }
+
+  private processingModule(name: string, StoreArr: StoreManager[] = []): void {
+    const store: Record<string, any> = {
+      state: {},
+      actions: {},
+      mutations: {},
+      getters: {},
+      strict: debug
+    };
+    const modules: Record<string, any> = {};
+    
+    StoreArr.forEach(s => {
+      if (!hasProperty(modules, name)) {
+        modules[name] = {};
+        modules[name]["namespaced"] = true;
+        modules[name]["state"] = { ...modules["state"], ...s.getState() };
+        modules[name]["mutations"] = {
+          ...modules[name]["mutations"],
+          ...s.getMutation()
+        };
+        modules[name]["actions"] = { ...modules["actions"], ...s.getAction() };
+        // modules["getters"] = { ...modules["getters"], ...s.getGetter() };
+        console.log(`The ${name} module has been registered`);
+      }
+    });
+    store["modules"] = modules;
+    this._store = store;
+    console.log(store);
+  }
+  public getStoreObject(): StoreOptions<any> {
+    return this._store;
+  }
   private installVueRouter(): void {
     Vue.use(VueRouter);
   }
-  // private installVuex(): void {
-  //   Vue.use(Vuex);
-  // }
+  private installVuex(): void {
+    Vue.use(Vuex);
+  }
   public addApplication(application: ApplicationObject): void {
     this._applications.push(application);
   }
@@ -163,6 +131,7 @@ class Application {
     return loadApplication(applicationName)
       .then(module => {
         const application = module.default;
+        this.registerStore(application.name);
         // this.registerStore(plugin.name, plugin.global);
         this.addApplication(application);
         // this.setI18n(plugin.name, plugin.i18n, plugin.languages);
@@ -188,22 +157,24 @@ class Application {
       });
   }
 
-  // private registerStore(moduleName: string, isGlobal: boolean = false) {
-  //   const name: string = moduleName.toLocaleLowerCase();
-  //   try {
-  //     const pluginStore = require(`@/store-v2/${name}/index.js`)["default"];
-  //     this.processingModule(name, pluginStore, isGlobal);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  private registerStore(moduleName: string): void {
+    const name: string = moduleName.toLocaleLowerCase();
+    try {
+      const moduleStore: StoreManager[] = require(`@/applications/${moduleName}/store/index.ts`)[
+        "default"
+      ];
+      this.processingModule(name, moduleStore);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  // public getStore() {
-  //   const store = this.getStoreObject();
-  //   return new Vuex.Store({
-  //     ...store
-  //   });
-  // }
+  public getStore() {
+    const store = this.getStoreObject();
+    return new Vuex.Store({
+      ...store
+    });
+  }
 
   public getRouter() {
     const routes = this.getRoutes();

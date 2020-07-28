@@ -14,7 +14,9 @@ export const loadComponent = (path: string) => {
   // const com = () => import( webpackChunkName: "index" `@/applications/common/${path}/index.js`)
   // 使用[request]来告诉webpack，这里的值是根据后面传入的字符串来决定，本例中就是变量path的值
   return () =>
-    import(/* webpackChunkName: "[request]" */ `@/applications/${path}/index.ts`);
+    import(
+      /* webpackChunkName: "[request]" */ `@/applications/${path}/index.ts`
+    );
 };
 
 export const loadI18n = (path: string) => {
