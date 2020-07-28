@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <span>result is {{ number }}</span>
+    <span>result is {{ number }}</span><br/>
     <button @click="add">加</button>
     <button @click="mins">减</button>
   </div>
@@ -22,13 +22,13 @@ import { mapActions, mapState } from "vuex";
 })
 export default class About extends Vue {
   // public currentValue = 0;
-  increase!: () => any;
+  increase!: (args: any) => any;
   number!: number;
   add() {
-    this.increase();
+    this.increase({ params: { a: "a", b: "b" }, type: "add" });
   }
   mins() {
-    console.log("mins");
+    this.increase({ params: { a: "a", b: "b" }, type: "mins" });
   }
 }
 </script>
