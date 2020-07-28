@@ -2,12 +2,13 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-28 15:02:26
+ * @Last Modified time: 2020-07-28 17:22:51
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
 import { AnyObject, Callback } from "../types";
 import { getType } from "../utils/mutationTypes";
+import Http, { HttpMethodTypes } from "../utils/http";
 import { ActionContext } from "vuex/types";
 class StoreManager {
   private _moduleName: string;
@@ -17,14 +18,18 @@ class StoreManager {
   private _action: AnyObject;
   private _mutation: AnyObject;
   private _getters: AnyObject;
-  constructor() {
-    this._moduleName = "";
+  constructor(moduleName: string) {
+    this._moduleName = moduleName;
     this._actionName = "";
     this._API = {};
     this._states = {};
     this._action = {};
     this._mutation = {};
     this._getters = {};
+    this.setApi();
+  }
+  private setApi(): void {
+    this._API = require(`@/applications/${this._moduleName}/store`)["API"];
   }
   private setState(states: AnyObject): void {
     this._states = { ...this._states, ...states };
@@ -32,18 +37,21 @@ class StoreManager {
   public getState(): AnyObject {
     return this._states;
   }
-  public action(actionName: string, async = false, method = "get" ): StoreManager {
-    console.log(method, async);
+  public action(
+    actionName: string,
+    async = false,
+    method: HttpMethodTypes = "get"
+  ): StoreManager {
     this._actionName = actionName;
     this._action[actionName] = (
       context: ActionContext<State, any>,
       args: AnyObject
     ) => {
       if (async) {
-        // const { params } = args;
-        // return http[method](this.API[actionName], params).then(res => {
-        //   commit(getType(this.moduleName, actionName), { ...args, res });
-        // });
+        const { params } = args;
+        return Http(method)(this._API[actionName], params).then(res => {
+          context.commit(getType(this._moduleName, actionName), { ...args, res });
+        });
       } else {
         context.commit(getType(this._moduleName, actionName), { ...args });
       }

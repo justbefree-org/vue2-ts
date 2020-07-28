@@ -22,12 +22,13 @@ import { mapActions, mapState } from "vuex";
 })
 export default class About extends Vue {
   // public currentValue = 0;
-  increase!: () => any
-  number!: number
+  increase!: () => any;
+  number!: number;
   add() {
     this.increase();
   }
   mins() {
+    console.log("mins");
   }
 }
 </script>

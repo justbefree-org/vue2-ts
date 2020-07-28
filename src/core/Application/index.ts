@@ -48,7 +48,7 @@ class Application {
       strict: debug
     };
     const modules: Record<string, any> = {};
-    
+
     StoreArr.forEach(s => {
       if (!hasProperty(modules, name)) {
         modules[name] = {};
