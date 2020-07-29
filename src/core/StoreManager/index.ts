@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-29 13:21:40
+ * @Last Modified time: 2020-07-29 18:17:27
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -58,14 +58,19 @@ class StoreManager {
     ) => {
       if (async) {
         const { params } = args;
-        return Http(method)(this._API[actionName], params).then(res => {
-          if (this.hasMutation(actionName)) {
-            context.commit(getType(this._moduleName, actionName), { ...args, res });
-          }
-          return Promise.resolve(res);
-        }).catch(err => {
-          return Promise.reject(err);
-        });
+        return Http(method)(this._API[actionName], params)
+          .then(res => {
+            if (this.hasMutation(actionName)) {
+              context.commit(getType(this._moduleName, actionName), {
+                ...args,
+                res
+              });
+            }
+            return Promise.resolve(res);
+          })
+          .catch(err => {
+            return Promise.reject(err);
+          });
       } else {
         context.commit(getType(this._moduleName, actionName), { ...args });
       }
@@ -89,6 +94,21 @@ class StoreManager {
 
   public getMutation() {
     return this._mutation;
+  }
+
+  public getters(name: string, callback: Callback): StoreManager {
+    this._getters[name] = (
+      state: State,
+      getters: any,
+      rootState: State,
+      rootGetters: any
+    ) => {
+      return callback({ state, getters, rootState, rootGetters });
+    };
+    return this;
+  }
+  public getGetters() {
+    return this._getters;
   }
 
   public register(args: AnyObject): StoreManager {

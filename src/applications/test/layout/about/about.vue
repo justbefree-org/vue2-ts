@@ -1,16 +1,23 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <span>result is {{ number }}</span><br/>
-    <button @click="add">加</button>
-    <button @click="mins">减</button>
-    <button @click="request">请求异步接口</button>
+    <div>
+      <span>result is {{ number }}</span>
+    </div>
+    <div>
+      <button @click="add">加</button>
+      <button @click="mins">减</button>
+      <button @click="request">请求异步接口</button>
+    </div>
+    <div>
+      <span>getters {{ getNumber }}</span>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 @Component({
   methods: {
@@ -18,7 +25,8 @@ import { mapActions, mapState } from "vuex";
   },
 
   computed: {
-    ...mapState("test", ["number"])
+    ...mapState("test", ["number"]),
+    ...mapGetters("test", ["getNumber"])
   }
 })
 export default class About extends Vue {
@@ -26,6 +34,7 @@ export default class About extends Vue {
   increase!: (args: any) => any;
   getInfo!: (args: any) => Promise<any>;
   number!: number;
+  getNumber!: number;
   add() {
     this.increase({ params: { a: "a", b: "b" }, type: "add" });
   }
@@ -33,11 +42,13 @@ export default class About extends Vue {
     this.increase({ params: { a: "a", b: "b" }, type: "mins" });
   }
   request() {
-    this.getInfo({ name: "hello" }).then(res => {
-      console.log("返回的结果", res);
-    }).catch(err => {
-      console.log("出现异常", err);
-    });
+    this.getInfo({ name: "hello" })
+      .then(res => {
+        console.log("返回的结果", res);
+      })
+      .catch(err => {
+        console.log("出现异常", err);
+      });
   }
 }
 </script>
