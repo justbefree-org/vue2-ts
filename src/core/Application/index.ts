@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-28 14:07:17
+ * @Last Modified time: 2020-07-29 11:27:20
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -52,16 +52,16 @@ class Application {
     StoreArr.forEach(s => {
       if (!hasProperty(modules, name)) {
         modules[name] = {};
-        modules[name]["namespaced"] = true;
-        modules[name]["state"] = { ...modules["state"], ...s.getState() };
-        modules[name]["mutations"] = {
-          ...modules[name]["mutations"],
-          ...s.getMutation()
-        };
-        modules[name]["actions"] = { ...modules["actions"], ...s.getAction() };
-        // modules["getters"] = { ...modules["getters"], ...s.getGetter() };
-        console.log(`The ${name} module has been registered`);
       }
+      modules[name]["namespaced"] = true;
+      modules[name]["state"] = { ...modules[name]["state"], ...s.getState() };
+      modules[name]["mutations"] = {
+        ...modules[name]["mutations"],
+        ...s.getMutation()
+      };
+      modules[name]["actions"] = { ...modules[name]["actions"], ...s.getAction() };
+      // modules[name]["getters"] = { ...modules[name]["getters"], ...s.getGetter() };
+      console.log(`The ${name} module has been registered`);
     });
     store["modules"] = modules;
     this._store = store;

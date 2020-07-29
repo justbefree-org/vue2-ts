@@ -4,6 +4,7 @@
     <span>result is {{ number }}</span><br/>
     <button @click="add">加</button>
     <button @click="mins">减</button>
+    <button @click="request">请求异步接口</button>
   </div>
 </template>
 
@@ -13,7 +14,7 @@ import { mapActions, mapState } from "vuex";
 
 @Component({
   methods: {
-    ...mapActions("test", ["increase"])
+    ...mapActions("test", ["increase", "getInfo"])
   },
 
   computed: {
@@ -23,12 +24,20 @@ import { mapActions, mapState } from "vuex";
 export default class About extends Vue {
   // public currentValue = 0;
   increase!: (args: any) => any;
+  getInfo!: (args: any) => Promise<any>;
   number!: number;
   add() {
     this.increase({ params: { a: "a", b: "b" }, type: "add" });
   }
   mins() {
     this.increase({ params: { a: "a", b: "b" }, type: "mins" });
+  }
+  request() {
+    this.getInfo({ name: "hello" }).then(res => {
+      console.log("返回的结果", res);
+    }).catch(err => {
+      console.log("出现异常", err);
+    });
   }
 }
 </script>

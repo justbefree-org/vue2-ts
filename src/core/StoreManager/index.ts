@@ -2,13 +2,14 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-28 17:22:51
+ * @Last Modified time: 2020-07-29 13:21:40
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
 import { AnyObject, Callback } from "../types";
 import { getType } from "../utils/mutationTypes";
 import Http, { HttpMethodTypes } from "../utils/http";
+import { hasProperty } from "../utils";
 import { ActionContext } from "vuex/types";
 class StoreManager {
   private _moduleName: string;
@@ -29,13 +30,21 @@ class StoreManager {
     this.setApi();
   }
   private setApi(): void {
-    this._API = require(`@/applications/${this._moduleName}/store`)["API"];
+    try {
+      this._API = require(`@/applications/${this._moduleName}/store`)["API"];
+    } catch (err) {
+      this._API = {};
+      console.log(err);
+    }
   }
   private setState(states: AnyObject): void {
     this._states = { ...this._states, ...states };
   }
   public getState(): AnyObject {
     return this._states;
+  }
+  public hasMutation(actionName: string): boolean {
+    return hasProperty(this._mutation, getType(this._moduleName, actionName));
   }
   public action(
     actionName: string,
@@ -50,7 +59,12 @@ class StoreManager {
       if (async) {
         const { params } = args;
         return Http(method)(this._API[actionName], params).then(res => {
-          context.commit(getType(this._moduleName, actionName), { ...args, res });
+          if (this.hasMutation(actionName)) {
+            context.commit(getType(this._moduleName, actionName), { ...args, res });
+          }
+          return Promise.resolve(res);
+        }).catch(err => {
+          return Promise.reject(err);
         });
       } else {
         context.commit(getType(this._moduleName, actionName), { ...args });
