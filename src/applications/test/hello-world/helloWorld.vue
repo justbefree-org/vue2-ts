@@ -136,10 +136,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import Super from "@/core/Super";
 
 @Component
-export default class HelloWorld extends Vue {
+export default class HelloWorld extends Super {
   @Prop() private msg!: string;
+  public appName = "test";
 }
 </script>
 

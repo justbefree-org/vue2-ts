@@ -9,4 +9,6 @@ export const API = {
   getInfo: "/api"
 };
 import importAll from "@/core/utils/importAll";
-export default importAll(require.context('./', false, /\.ts$/), ["./index.ts"]).toArray();
+export default importAll(require.context("./", false, /\.ts$/), [
+  "./index.ts"
+]).toArray();

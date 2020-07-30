@@ -7,7 +7,8 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/applications/test/hello-world";
+import HelloWorld, { locale } from "@/applications/test/hello-world";
+console.log("HelloWorld", HelloWorld, locale);
 
 export default {
   name: "Home",

@@ -64,5 +64,5 @@ const methods = { post, get, postJSON };
 export type HttpMethodTypes = "get" | "post" | "postJSON";
 const Http = (args: keyof typeof methods) => {
   return methods[args];
-}
+};
 export default Http;

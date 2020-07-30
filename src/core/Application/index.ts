@@ -2,41 +2,37 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-29 14:20:53
+ * @Last Modified time: 2020-07-30 22:16:10
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
 import { StoreOptions, ModuleTree, Module } from "vuex/types";
 import { default as StoreManager } from "../StoreManager";
 import { ApplicationObject } from "./types";
-import { Callback } from "../types";
-// import { AsyncComponent } from "vue/types";
+import { Callback, AnyObject } from "../types";
 import { RouteConfig } from "vue-router";
 import { getEnvironment } from "@/config";
 const debug = getEnvironment() !== "production";
 import { loadApplication } from "../utils/load";
-import { hasProperty } from "../utils";
+import { hasProperty, camelize } from "../utils";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
+import VueI18n from "vue-i18n";
+
 class Application {
   private _store: StoreOptions<any>;
-  // private _tempModules: ModuleTree<any>;
   private _applications: Array<ApplicationObject>;
-  // private _components: Array<AsyncComponent>;
-  // private _lazyLoadComponents: {};
   private _routes: Array<RouteConfig>;
-  // private _i18n: {};
-  // private callbackForEveryComponent: Callback;
+  private _messages: AnyObject;
   constructor() {
     this._applications = [];
-    // this._components = [];
-    // this._lazyLoadComponents = {};
     this._store = {};
     this._routes = [];
-    // this.callbackForEveryComponent = function () {};
+    this._messages = {};
     this.installVueRouter();
     this.installVuex();
+    this.installI18n();
   }
 
   private processingModule(name: string, StoreArr: StoreManager[] = []): void {
@@ -82,53 +78,40 @@ class Application {
   private installVuex(): void {
     Vue.use(Vuex);
   }
+  private installI18n(): void {
+    Vue.use(VueI18n);
+  }
   public addApplication(application: ApplicationObject): void {
     this._applications.push(application);
   }
-  // public setComponents(conmponents: Array<AsyncComponent>): void {
-  //   this._components = conmponents;
-  // }
-  // public getComponents(): Array<AsyncComponent> {
-  //   return this._components;
-  // }
-  // private getLazyLoadComponents() {
-  //   return this._lazyLoadComponents;
-  // }
-  // private setLazyLoadComponents(lazyLoadCoponents): void {
-  //   this._lazyLoadComponents = lazyLoadCoponents;
-  // }
+
   private setRoutes(routes: Array<RouteConfig>): void {
     this._routes = routes;
   }
   private getRoutes(): Array<RouteConfig> {
     return this._routes;
   }
-  // private setI18n(
-  //   pluginName: string,
-  //   i18n = {},
-  //   languages: Array<string> = []
-  // ) {
-  //   const componentName = Object.keys(i18n);
-  //   languages.forEach(lang => {
-  //     if (!this._i18n[lang]) {
-  //       this._i18n[lang] = { language: {} };
-  //     }
-  //     if (!this._i18n[lang]["language"][pluginName]) {
-  //       this._i18n[lang]["language"][pluginName] = {};
-  //     }
-  //     componentName.forEach(name => {
-  //       if (!this._i18n[lang]["language"][pluginName][name]) {
-  //         this._i18n[lang]["language"][pluginName][name] = i18n[name][lang];
-  //       }
-  //     });
-  //   });
-  // }
-  // private getI18n() {
-  //   return this._i18n;
-  // }
-  // public getLanguage(lang: string) {
-  //   return this._i18n[lang];
-  // }
+
+  private processingMessages(appName: string, i18n: AnyObject): void {
+    Object.keys(i18n).forEach(key => {
+      const path: string = key.replace(/\.locale.*.lang/, "");
+      const lang: string = key.replace(/\S+(locale.)(\S+)(.lang)$/, "$2");
+      const pathArr = path.split(".");
+      if (!hasProperty(this._messages, lang)) {
+        this._messages[lang] = {};
+        if (!hasProperty(this._messages[lang], appName)) {
+          this._messages[lang][appName] = {};
+        }
+      }
+      const componentName = pathArr[pathArr.length - 1];
+      this._messages[lang][appName][camelize(componentName, true)] = i18n[key];
+    });
+    console.log(this._messages);
+  }
+
+  private getMessages(): AnyObject {
+    return this._messages;
+  }
 
   public register(applicationName: string): Promise<any> | boolean {
     if (!applicationName) {
@@ -138,21 +121,8 @@ class Application {
       .then(module => {
         const application = module.default;
         this.registerStore(application.name);
-        // this.registerStore(plugin.name, plugin.global);
         this.addApplication(application);
-        // this.setI18n(plugin.name, plugin.i18n, plugin.languages);
-        // if (
-        //   Object.prototype.toString.call(plugin.components) === "[object Array]"
-        // ) {
-        //   const components = [...plugin.components, ...this.getComponents()];
-        //   this.setComponents(components);
-        // } else {
-        // const lazyLoadCoponents = {
-        //   ...plugin.components,
-        //   ...this.getLazyLoadComponents()
-        // };
-        // this.setLazyLoadComponents(lazyLoadCoponents);
-        // }
+        this.processingMessages(application.name, application.i18n);
         const routes = [...this.getRoutes(), ...application.routes];
         this.setRoutes(routes);
         return Promise.resolve(application);
@@ -187,26 +157,13 @@ class Application {
     return new VueRouter({ mode: "history", routes });
   }
 
-  // private every(callback: Callback): void {
-  //   if (callback && typeof callback === "function") {
-  //     this.callbackForEveryComponent = callback;
-  //   }
-  // }
-
-  public install(): void {
-    // 同步加载所有注册组件
-    // this.getComponents().map(component => {
-    //   this.callbackForEveryComponent(component);
-    //   Vue.use(component);
-    // });
-    // 异步按需加载组件
-    // Object.keys(this.getLazyLoadComponents()).forEach(key => {
-    //   this.callbackForEveryComponent({
-    //     key,
-    //     component: this.getLazyLoadComponents(key)
-    //   });
-    //   Vue.component(key, this.getLazyLoadComponents(key));
-    // });
+  public getI18n() {
+    const messages = this.getMessages();
+    return new VueI18n({
+      locale: "zh-CN",
+      messages,
+      fallbackLocale: "zh-CN"
+    });
   }
 }
 
