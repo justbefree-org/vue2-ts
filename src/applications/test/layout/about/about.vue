@@ -12,6 +12,9 @@
     <div>
       <span>getters {{ getNumber }}</span>
     </div>
+    <div>
+      <span>返回的结果{{ results }}</span>
+    </div>
   </div>
 </template>
 
@@ -31,6 +34,7 @@ import { mapActions, mapState, mapGetters } from "vuex";
 })
 export default class About extends Vue {
   // public currentValue = 0;
+  public results = "";
   increase!: (args: any) => any;
   getInfo!: (args: any) => Promise<any>;
   number!: number;
@@ -45,6 +49,7 @@ export default class About extends Vue {
     this.getInfo({ name: "hello" })
       .then(res => {
         console.log("返回的结果", res);
+        this.results = JSON.stringify(res);
       })
       .catch(err => {
         console.log("出现异常", err);
