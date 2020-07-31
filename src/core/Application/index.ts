@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-30 22:16:10
+ * @Last Modified time: 2020-07-31 13:35:56
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -67,7 +67,6 @@ class Application {
     });
     store["modules"] = modules;
     this._store = store;
-    console.log(store);
   }
   public getStoreObject(): StoreOptions<any> {
     return this._store;
@@ -106,7 +105,6 @@ class Application {
       const componentName = pathArr[pathArr.length - 1];
       this._messages[lang][appName][camelize(componentName, true)] = i18n[key];
     });
-    console.log(this._messages);
   }
 
   private getMessages(): AnyObject {
