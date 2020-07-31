@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-31 13:35:56
+ * @Last Modified time: 2020-07-31 15:03:21
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -68,7 +68,7 @@ class Application {
     store["modules"] = modules;
     this._store = store;
   }
-  public getStoreObject(): StoreOptions<any> {
+  private getStoreObject(): StoreOptions<any> {
     return this._store;
   }
   private installVueRouter(): void {
@@ -80,7 +80,7 @@ class Application {
   private installI18n(): void {
     Vue.use(VueI18n);
   }
-  public addApplication(application: ApplicationObject): void {
+  private addApplication(application: ApplicationObject): void {
     this._applications.push(application);
   }
 
