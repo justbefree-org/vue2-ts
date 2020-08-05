@@ -15,12 +15,40 @@
     <div>
       <span>返回的结果{{ results }}</span>
     </div>
+    <div>
+      <span>bem</span>
+      <pre>
+        bem("block"); => {{ bem("block") }}
+      </pre>
+      <pre>
+        bem("block", "element"); => {{ bem("block", "element") }}
+      </pre>
+      <pre>
+        bem({ block: "green" }); => {{ bem({ block: "green" }) }}
+      </pre>
+      <pre>
+        bem("block", { element: "active" }); => {{
+          bem("block", { element: "active" })
+        }}
+      </pre>
+      <pre>
+        bem({ block: "active" }, { element: "active" }); => {{
+          bem({ block: "active" }, { element: "active" })
+        }}
+      </pre>
+      <pre>
+        bem({ block: { warning: "is-show" } }); => {{
+          bem({ block: { warning: "is-show" } })
+        }}
+      </pre>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapActions, mapState, mapGetters } from "vuex";
+import Super from "@/core/Super";
 
 @Component({
   methods: {
@@ -32,7 +60,7 @@ import { mapActions, mapState, mapGetters } from "vuex";
     ...mapGetters("test", ["getNumber"])
   }
 })
-export default class About extends Vue {
+export default class About extends Super {
   // public currentValue = 0;
   public results = "";
   increase!: (args: any) => any;
