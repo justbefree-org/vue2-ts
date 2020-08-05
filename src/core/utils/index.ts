@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-28 13:40:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-30 18:19:48
+ * @Last Modified time: 2020-08-05 14:33:11
  * @E-mail: justbefree@126.com
  */
 
@@ -20,4 +20,11 @@ export const camelize = (str: string, upperCaseFirstLetter = false): string => {
     c ? c.toUpperCase() : ""
   );
   return upperCaseFirstLetter ? toUpperCaseFirstLetter(cameString) : cameString;
+};
+export const isObject = (value: any): boolean => {
+  const type = typeof value;
+  return value != null && type === "object";
+};
+export const isString = (value: any): boolean => {
+  return Object.prototype.toString.call(value) === "[object String]";
 };
