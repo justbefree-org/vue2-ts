@@ -42,13 +42,17 @@
         }}
       </pre>
     </div>
+    <div>
+      <div :class="[bem({ rectangle: 'red' })]">红色矩形</div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import "./style/index.scss";
 import { Component, Vue } from "vue-property-decorator";
 import { mapActions, mapState, mapGetters } from "vuex";
-import Super from "@/core/Super";
+import Application from "@/Application";
 
 @Component({
   methods: {
@@ -60,7 +64,7 @@ import Super from "@/core/Super";
     ...mapGetters("test", ["getNumber"])
   }
 })
-export default class About extends Super {
+export default class About extends Application {
   // public currentValue = 0;
   public results = "";
   increase!: (args: any) => any;

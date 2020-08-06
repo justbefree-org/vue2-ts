@@ -20,10 +20,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Super from "@/core/Super";
+import Application from "@/Application";
 
 @Component
-export default class HelloWorld extends Super {
+export default class HelloWorld extends Application {
   @Prop() private msg!: string;
   public appName = "test";
 }
