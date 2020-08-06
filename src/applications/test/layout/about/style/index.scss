@@ -2,10 +2,10 @@
 * @Author: Just be free
 * @Date:   2020-08-06 13:30:34
 * @Last Modified by:   Just be free
-* @Last Modified time: 2020-08-06 15:49:06
+* @Last Modified time: 2020-08-06 16:10:14
 */
 
-@include b(bem-rectangle) {
+@include b(rectangle) {
   @include m(red) {
     background: red;
   }
