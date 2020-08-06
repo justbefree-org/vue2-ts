@@ -2,11 +2,12 @@
 * @Author: Just be free
 * @Date:   2020-08-06 13:30:34
 * @Last Modified by:   Just be free
-* @Last Modified time: 2020-08-06 16:10:14
+* @Last Modified time: 2020-08-06 16:22:42
 */
 
 @include b(rectangle) {
   @include m(red) {
     background: red;
+    color: $white;
   }
 }
