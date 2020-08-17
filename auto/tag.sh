@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 17:00:57
+# @Last Modified time: 2020-08-17 17:03:20
 function getSystem {
   system=`uname`
   echo ${system}
@@ -36,8 +36,6 @@ if [[ "$envirnoment" == "" ]]; then
   cd ..
   echo "Please enter the envirnoment: [release, test, dev]"
   read envirnoment
-else
-  echo "else"
 fi
 projectNo=`cat ./auto/projectNo`
 validString="release,test,dev"
@@ -61,19 +59,39 @@ function modifyConfigFile {
   fi
 }
 modifyConfigFile $tag $envirnoment
-git add .
-git commit -m "new tag $tag published by `gitName`" --no-verify
-git push
-if [ $? != 0 ]; then
-  git push origin $currentBranch -u
-fi
-git tag "$tag" -a -m "$tag"
-git push origin "$tag"
-# git push origin --tags
-echo "Successfully taged"
-echo "##########################################"
 
-echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
+function gitUpdate {
+  git add .
+  git commit -m "new tag $1 published by `gitName`" --no-verify
+  git push
+  if [ $? != 0 ]; then
+    git push origin $2 -u
+  fi
+  git tag "$1" -a -m "$1"
+  git push origin "$1"
+  # git push origin --tags
+  echo "Successfully taged"
+  echo "##########################################"
 
-echo "##########################################"
+  echo -e "         \033[32;49;1m$1 $3\033[39;49;0m"
+
+  echo "##########################################"
+}
+gitUpdate $tag $currentBranch $projectNo
+
+# git add .
+# git commit -m "new tag $tag published by `gitName`" --no-verify
+# git push
+# if [ $? != 0 ]; then
+#   git push origin $currentBranch -u
+# fi
+# git tag "$tag" -a -m "$tag"
+# git push origin "$tag"
+# # git push origin --tags
+# echo "Successfully taged"
+# echo "##########################################"
+
+# echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
+
+# echo "##########################################"
 
