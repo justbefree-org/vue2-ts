@@ -6,5 +6,5 @@
  * @E-mail: justbefree@126.com
  */
 module.exports = {
-  version: "test data(can not be deleted)"
+  version: 'The current version is dev20200817163730 from config branch, published by Just be free',
 };
