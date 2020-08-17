@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 17:07:05
+# @Last Modified time: 2020-08-17 17:07:38
 function gitUpdate {
   git add .
   git commit -m "new tag $1 published by `gitName`" --no-verify
@@ -61,8 +61,6 @@ if [[ "$envirnoment" == "" ]]; then
   cd ..
   echo "Please enter the envirnoment: [release, test, dev]"
   read envirnoment
-else
-  echo "Wait a while..."
 fi
 projectNo=`cat ./auto/projectNo`
 validString="release,test,dev"
