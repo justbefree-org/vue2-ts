@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-31 15:03:21
+ * @Last Modified time: 2020-08-17 10:04:12
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -43,7 +43,7 @@ class Application {
       getters: {},
       strict: debug
     };
-    const modules: Record<string, any> = {};
+    const modules: Record<string, any> = { ...this.getModules() };
 
     StoreArr.forEach(s => {
       if (!hasProperty(modules, name)) {
@@ -148,6 +148,10 @@ class Application {
     return new Vuex.Store({
       ...store
     });
+  }
+
+  private getModules() {
+    return this._store.modules || {};
   }
 
   public getRouter() {
