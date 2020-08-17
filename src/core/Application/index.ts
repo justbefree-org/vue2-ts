@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-17 10:36:01
+ * @Last Modified time: 2020-08-17 17:20:28
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -98,9 +98,9 @@ class Application {
       const pathArr = path.split(".");
       if (!hasProperty(this._messages, lang)) {
         this._messages[lang] = {};
-        if (!hasProperty(this._messages[lang], appName)) {
-          this._messages[lang][appName] = {};
-        }
+      }
+      if (!hasProperty(this._messages[lang], appName)) {
+        this._messages[lang][appName] = {};
       }
       const componentName = pathArr[pathArr.length - 1];
       this._messages[lang][appName][camelize(componentName, true)] = i18n[key];
