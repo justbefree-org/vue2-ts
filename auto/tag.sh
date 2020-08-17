@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 16:44:14
+# @Last Modified time: 2020-08-17 16:44:49
 function getSystem {
   system=`uname`
   echo ${system}
@@ -57,10 +57,11 @@ echo -e "Hello, \033[32;49;1m`gitName`\033[39;49;0m"
 if [[ `getSystem` == "Darwin" ]]; then
   #statements
   sed -i "" "s/.*version.*/  version: 'The current version is $tag from `gitBranch` branch, published by `gitName`',/" ./src/config/$envirnoment.ts
+  echo "执行完毕"
 else
   sed -i "s/.*version.*/\tversion: 'The current version is $tag from `gitBranch` branch, published by `gitName`',/" ./src/config/$envirnoment.ts
 fi
-echo "执行完毕"
+
 git add .
 git commit -m "new tag $tag published by `gitName`" --no-verify
 git push
