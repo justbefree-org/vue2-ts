@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 10:02:44
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-30 17:50:04
+ * @Last Modified time: 2020-08-17 10:39:14
  * @E-mail: justbefree@126.com
  */
 import Vue from "vue";
@@ -11,7 +11,7 @@ import { PlatformConstructorParams } from "./types";
 import { default as Application } from "../Application";
 const app = new Application();
 class Platform {
-  private _appStack: Array<Promise<any> | boolean>;
+  private _appStack: Array<Promise<any>>;
   private _App: Component;
   private _id: string;
   constructor(args: PlatformConstructorParams) {
@@ -22,7 +22,7 @@ class Platform {
   private getAppStack() {
     return this._appStack;
   }
-  private registerApplication(app: Promise<any> | boolean): Platform {
+  private registerApplication(app: Promise<any>): Platform {
     this._appStack.push(app);
     return this;
   }
@@ -32,7 +32,7 @@ class Platform {
   public startUp(): void {
     const apps = this.getAppStack();
     Promise.all(apps).then(res => {
-      // const language = pluginManager.getLanguage("zh-CN");
+      console.log(`Platform started ${res}`);
       const router = app.getRouter();
       const store = app.getStore();
       const i18n = app.getI18n();

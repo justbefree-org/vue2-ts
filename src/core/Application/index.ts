@@ -2,14 +2,14 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-17 10:04:12
+ * @Last Modified time: 2020-08-17 10:36:01
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
-import { StoreOptions, ModuleTree, Module } from "vuex/types";
+import { StoreOptions } from "vuex/types";
 import { default as StoreManager } from "../StoreManager";
 import { ApplicationObject } from "./types";
-import { Callback, AnyObject } from "../types";
+import { AnyObject } from "../types";
 import { RouteConfig } from "vue-router";
 import { getEnvironment } from "@/config";
 const debug = getEnvironment() !== "production";
@@ -111,9 +111,9 @@ class Application {
     return this._messages;
   }
 
-  public register(applicationName: string): Promise<any> | boolean {
+  public register(applicationName: string): Promise<any> {
     if (!applicationName) {
-      return false;
+      return Promise.reject("Application name is required!");
     }
     return loadApplication(applicationName)
       .then(module => {
