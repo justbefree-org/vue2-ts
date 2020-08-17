@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 16:44:49
+# @Last Modified time: 2020-08-17 16:49:19
 function getSystem {
   system=`uname`
   echo ${system}
@@ -77,6 +77,6 @@ echo "##########################################"
 echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
 
 echo "##########################################"
-read -p "Press Enter to exit...:" cu
-echo "$cu I wanna see you no more, Bye"
-exit 0
+# read -p "Press Enter to exit...:" cu
+# echo "$cu I wanna see you no more, Bye"
+# exit 0
