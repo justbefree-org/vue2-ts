@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 16:35:44
+# @Last Modified time: 2020-08-17 16:41:07
 function getSystem {
   system=`uname`
   echo ${system}
@@ -60,23 +60,44 @@ if [[ `getSystem` == "Darwin" ]]; then
 else
   sed -i "s/.*version.*/\tversion: 'The current version is $tag from `gitBranch` branch, published by `gitName`',/" ./src/config/$envirnoment.ts
 fi
-git add .
-git commit -m "new tag $tag published by `gitName`" --no-verify
-git push
-if [ $? != 0 ]; then
-  git push origin $currentBranch -u
-fi
-git tag "$tag" -a -m "$tag"
-git push origin "$tag"
-# git push origin --tags
-echo "Successfully taged"
-echo "##########################################"
+# git add .
+# git commit -m "new tag $tag published by `gitName`" --no-verify
+# git push
+# if [ $? != 0 ]; then
+#   git push origin $currentBranch -u
+# fi
+# git tag "$tag" -a -m "$tag"
+# git push origin "$tag"
+# # git push origin --tags
+# echo "Successfully taged"
+# echo "##########################################"
 
-echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
+# echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
 
-echo "##########################################"
-read -p "Press Enter to exit...:" cu
-echo "$cu I wanna see you no more, Bye"
-sleep 1s
-exit 0
+# echo "##########################################"
+# read -p "Press Enter to exit...:" cu
+# echo "$cu I wanna see you no more, Bye"
+# sleep 1s
 # exit 0
+function gitPorcess {
+  git add .
+  git commit -m "new tag $tag published by `gitName`" --no-verify
+  git push
+  if [ $? != 0 ]; then
+    git push origin $currentBranch -u
+  fi
+  git tag "$tag" -a -m "$tag"
+  git push origin "$tag"
+  # git push origin --tags
+  echo "Successfully taged"
+  echo "##########################################"
+
+  echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
+
+  echo "##########################################"
+  read -p "Press Enter to exit...:" cu
+  echo "$cu I wanna see you no more, Bye"
+  sleep 1s
+  exit 0
+}
+gitPorcess

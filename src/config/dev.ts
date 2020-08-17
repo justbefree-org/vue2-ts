@@ -2,9 +2,9 @@
  * @Author: Just be free
  * @Date:   2020-08-17 11:45:07
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-17 16:34:19
+ * @Last Modified time: 2020-08-17 16:37:55
  * @E-mail: justbefree@126.com
  */
 module.exports = {
-  version: 'The current version is dev20200817163730 from config branch, published by Just be free',
+  version: 'The current version is dev20200817164144 from config branch, published by Just be free',
 };
