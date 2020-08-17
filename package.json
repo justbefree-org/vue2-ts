@@ -7,6 +7,9 @@
     "build:dev": "vue-cli-service build --mode development",
     "build:test": "vue-cli-service build --mode test",
     "build:prod": "vue-cli-service build --mode production",
+    "tag:dev": "node auto/tag.ts dev",
+    "tag:test": "node auto/tag.ts test",
+    "tag:release": "node auto/tag.ts release",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
