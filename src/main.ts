@@ -1,3 +1,5 @@
+import { logInfo } from "@/config";
+logInfo();
 import { default as Platform } from "@/core/Platform";
 import Vue from "vue";
 import App from "./App.vue";
