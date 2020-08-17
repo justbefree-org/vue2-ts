@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 16:54:37
+# @Last Modified time: 2020-08-17 16:59:27
 function getSystem {
   system=`uname`
   echo ${system}
@@ -15,11 +15,7 @@ function gitName {
   br=`git config user.name`
   echo ${br}
 }
-#if [[ `gitBranch` != "master" ]]; then
-#  echo "Only master branch can tag release tag"
-#  exit 0
-#fi
-projectNo=`cat projectNo`
+projectNo=`cat ./auto/projectNo`
 currentBranch=`gitBranch`
 
 envirnoment=""
@@ -53,25 +49,16 @@ tag="$envirnoment$(date '+%Y%m%d%H%M%S')"
 # cd ..
 echo "auto tag"
 echo -e "Hello, \033[32;49;1m`gitName`\033[39;49;0m"
-# tag record
-# if [[ `getSystem` == "Darwin" ]]; then
-#   #statements
-#   sed -i "" "s/.*version.*/  version: 'The current version is $tag from `gitBranch` branch, published by `gitName`',/" ./src/config/$envirnoment.ts
-#   echo "执行完毕"
-# else
-#   sed -i "s/.*version.*/\tversion: 'The current version is $tag from `gitBranch` branch, published by `gitName`',/" ./src/config/$envirnoment.ts
-# fi
+
 function modifyConfigFile {
   if [[ `getSystem` == "Darwin" ]]; then
     #statements
     sed -i "" "s/.*version.*/  version: 'The current version is $1 from `gitBranch` branch, published by `gitName`',/" ./src/config/$2.ts
-    echo "执行完毕"
   else
     sed -i "s/.*version.*/\tversion: 'The current version is $1 from `gitBranch` branch, published by `gitName`',/" ./src/config/$2.ts
   fi
 }
 modifyConfigFile $tag $envirnoment
-echo "ddddddddddddd========="
 git add .
 git commit -m "new tag $tag published by `gitName`" --no-verify
 git push
@@ -87,6 +74,4 @@ echo "##########################################"
 echo -e "         \033[32;49;1m$tag $projectNo\033[39;49;0m"
 
 echo "##########################################"
-# read -p "Press Enter to exit...:" cu
-# echo "$cu I wanna see you no more, Bye"
-# exit 0
+
