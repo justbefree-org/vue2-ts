@@ -2,7 +2,7 @@
 # @Author: Just be free
 # @Date:   2020-08-17 15:45:37
 # @Last Modified by:   Just be free
-# @Last Modified time: 2020-08-17 16:59:27
+# @Last Modified time: 2020-08-17 17:00:57
 function getSystem {
   system=`uname`
   echo ${system}
@@ -15,7 +15,7 @@ function gitName {
   br=`git config user.name`
   echo ${br}
 }
-projectNo=`cat ./auto/projectNo`
+
 currentBranch=`gitBranch`
 
 envirnoment=""
@@ -36,8 +36,10 @@ if [[ "$envirnoment" == "" ]]; then
   cd ..
   echo "Please enter the envirnoment: [release, test, dev]"
   read envirnoment
+else
+  echo "else"
 fi
-
+projectNo=`cat ./auto/projectNo`
 validString="release,test,dev"
 validEnvirnoment=$(echo $validString | grep "${envirnoment}")
 if [[  "$validEnvirnoment" == "" ]]; then
