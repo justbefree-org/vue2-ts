@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-30 13:43:52
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-06 16:01:09
+ * @Last Modified time: 2020-08-18 15:11:24
  * @E-mail: justbefree@126.com
  */
 
@@ -25,6 +25,9 @@ export default class Super extends Vue {
   }
   changeLanguage(lang: string): void {
     this.$i18n.locale = lang;
+  }
+  getCurrentLanguage(): string {
+    return this.$i18n.locale || "zh-CN";
   }
   // bem(b: BemConstructorContext, e?: BemConstructorContext): string {
   //   return createBem(b, e);
