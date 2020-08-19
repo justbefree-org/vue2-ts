@@ -32,13 +32,33 @@
         }}
       </pre>
       <pre>
+        bem("block", { element: { "is-active": true } }); => {{
+          bem("block", { element: { "is-active": true } })
+        }}
+      </pre>
+      <pre>
+        bem("block", { element: { "is-active": false } }); => {{
+          bem("block", { element: { "is-active": false } })
+        }}
+      </pre>
+      <pre>
+        bem("block", { element: { "has-color": "black" } }); => {{
+          bem("block", { element: { "has-color": "black" } })
+        }}
+      </pre>
+      <pre>
         bem({ block: "active" }, { element: "active" }); => {{
           bem({ block: "active" }, { element: "active" })
         }}
       </pre>
       <pre>
-        bem({ block: { warning: "is-show" } }); => {{
-          bem({ block: { warning: "is-show" } })
+        bem({ block: { "is-show": true } }); => {{
+          bem({ block: { "is-show": true } })
+        }}
+      </pre>
+      <pre>
+        bem({ block: { "is-show": false } }); => {{
+          bem({ block: { "is-show": false } })
         }}
       </pre>
     </div>
