@@ -2,20 +2,19 @@
  * @Author: Just be free
  * @Date:   2020-07-22 15:40:12
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-23 10:38:24
+ * @Last Modified time: 2020-08-19 14:04:18
  * @E-mail: justbefree@126.com
  */
 import { loadComponent } from "../utils/load";
 import { RouteConfig } from "vue-router";
-import { Component } from "../types";
 class RouterManager {
   private baseDir: string;
   private routes: Array<RouteConfig>;
-  // private routeConfig: Array<RouteConfig>;
-  constructor(baseDir: string) {
+  private nameSpace: string;
+  constructor(baseDir: string, nameSpace?: string) {
     this.baseDir = baseDir;
     this.routes = [];
-    // this.routeConfig = [];
+    this.nameSpace = nameSpace ? nameSpace : "";
   }
   private getBaseDir(): string {
     return this.baseDir;
@@ -28,6 +27,16 @@ class RouterManager {
   }
   register(routes: Array<any> = []) {
     routes.forEach(route => {
+      if (route.path.startsWith("/") && this.nameSpace !== "") {
+        route.path = `/${this.nameSpace}${route.path}`;
+      }
+      if (
+        route.redirect &&
+        route.redirect.startsWith("/") &&
+        this.nameSpace !== ""
+      ) {
+        route.redirect = `/${this.nameSpace}${route.redirect}`;
+      }
       if (route.pathName) {
         const path = `${this.getBaseDir()}/${route.pathName}`;
         route.component = loadComponent(path);

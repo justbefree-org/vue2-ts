@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import "./style/index.scss";
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { mapActions, mapState, mapGetters } from "vuex";
 import Application from "@/Application";
 
@@ -87,8 +87,8 @@ import Application from "@/Application";
 export default class About extends Application {
   // public currentValue = 0;
   public results = "";
-  increase!: (args: any) => any;
-  getInfo!: (args: any) => Promise<any>;
+  increase!: (args: object) => void;
+  getInfo!: (args: object) => Promise<any>;
   number!: number;
   getNumber!: number;
   add() {
