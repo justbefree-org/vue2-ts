@@ -26,7 +26,7 @@
     ]
   },
   "dependencies": {
-    "awesome-bem-scss": "0.0.9",
+    "awesome-scss-bem": "^1.0.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "qs": "^6.9.4",
