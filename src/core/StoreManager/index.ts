@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-20 17:13:54
+ * @Last Modified time: 2020-08-20 17:30:56
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -52,7 +52,7 @@ class StoreManager {
   protected httpFailCallback(args: any): void {
     console.log("http fail callback", args);
   }
-  protected httpParamsModifer(args: AnyObject): AnyObject {
+  protected httpParamsModifier(args: AnyObject): AnyObject {
     console.log("http params modifer", args);
     return args;
   }
