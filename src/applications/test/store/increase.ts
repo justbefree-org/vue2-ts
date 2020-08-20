@@ -2,12 +2,12 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:46:34
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-29 18:18:19
+ * @Last Modified time: 2020-08-20 17:12:31
  * @E-mail: justbefree@126.com
  */
 
-import StoreManager from "@/core/StoreManager";
-const store = new StoreManager("test");
+import Store from "@/Store";
+const store = new Store("test");
 store
   .register({ state: { number: 0 } })
   .action("increase")

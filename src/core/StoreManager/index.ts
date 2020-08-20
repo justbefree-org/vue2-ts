@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-07-29 18:17:27
+ * @Last Modified time: 2020-08-20 17:13:54
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -46,6 +46,16 @@ class StoreManager {
   public hasMutation(actionName: string): boolean {
     return hasProperty(this._mutation, getType(this._moduleName, actionName));
   }
+  protected httpSuccessCallback(args: AnyObject | string): void {
+    console.log("http success callback", args);
+  }
+  protected httpFailCallback(args: any): void {
+    console.log("http fail callback", args);
+  }
+  protected httpParamsModifer(args: AnyObject): AnyObject {
+    console.log("http params modifer", args);
+    return args;
+  }
   public action(
     actionName: string,
     async = false,
@@ -58,7 +68,10 @@ class StoreManager {
     ) => {
       if (async) {
         const { params } = args;
-        return Http(method)(this._API[actionName], params)
+        return Http(method)(
+          this._API[actionName],
+          this.httpParamsModifer(params)
+        )
           .then(res => {
             if (this.hasMutation(actionName)) {
               context.commit(getType(this._moduleName, actionName), {
@@ -66,9 +79,11 @@ class StoreManager {
                 res
               });
             }
+            this.httpSuccessCallback(res);
             return Promise.resolve(res);
           })
           .catch(err => {
+            this.httpFailCallback(err);
             return Promise.reject(err);
           });
       } else {
