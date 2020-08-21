@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-20 17:30:56
+ * @Last Modified time: 2020-08-21 11:45:15
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -70,7 +70,7 @@ class StoreManager {
         const { params } = args;
         return Http(method)(
           this._API[actionName],
-          this.httpParamsModifer(params)
+          this.httpParamsModifier(params)
         )
           .then(res => {
             if (this.hasMutation(actionName)) {
