@@ -47,7 +47,9 @@ class LocalStore {
     valued = this.decode(valued);
     try {
       valued = JSON.parse(valued);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
     return valued;
   }
   public remove(key: string): void {
