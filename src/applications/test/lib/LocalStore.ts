@@ -10,7 +10,7 @@ const Base64 = require("js-base64")["Base64"];
 
 import { default as LocalStorage, StoreTypes } from "@/lib/LocalStore";
 class TestStorage extends LocalStorage {
-  constructor(type: keyof typeof StoreTypes, version: string) {
+  constructor(type: StoreTypes, version: string) {
     super(type, "test", version, true);
   }
   protected encode(str: string): string {

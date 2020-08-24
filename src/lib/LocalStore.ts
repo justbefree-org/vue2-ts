@@ -6,15 +6,15 @@
  * @E-mail: justbefree@126.com
  */
 declare let global: any;
-export const StoreTypes = ["local", "session"];
+export type StoreTypes = "local" | "session";
 class LocalStore {
   private nameSpace: string;
-  private storeType: keyof typeof StoreTypes;
+  private storeType: StoreTypes;
   private $store: Storage;
   private version: string;
   private encrypt: boolean;
   constructor(
-    type: keyof typeof StoreTypes,
+    type: StoreTypes,
     nameSpace: string,
     version: string,
     encrypt?: true
