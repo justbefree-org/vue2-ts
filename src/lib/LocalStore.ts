@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-08-21 10:12:06
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-21 11:42:33
+ * @Last Modified time: 2020-09-01 16:25:48
  * @E-mail: justbefree@126.com
  */
 declare let global: any;
@@ -48,7 +48,10 @@ class LocalStore {
     try {
       valued = JSON.parse(valued);
     } catch (err) {
-      console.log(err);
+      console.log(
+        `"${valued}" can not be parsed; The property ${key} does not exit on ${this.storeType};`
+      );
+      console.warn(err);
     }
     return valued;
   }
