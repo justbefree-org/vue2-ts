@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
-    "build:dev": "vue-cli-service build --mode development",
-    "build:test": "vue-cli-service build --mode test",
-    "build:prod": "vue-cli-service build --mode production",
+    "build:dev": "node env.ts development && vue-cli-service build",
+    "build:test": "node env.ts test && vue-cli-service build",
+    "build:prod": "node env.ts production && vue-cli-service build",
     "tag:dev": "node auto/tag.ts dev",
     "tag:test": "node auto/tag.ts test",
     "tag:release": "node auto/tag.ts release",

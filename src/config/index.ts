@@ -2,14 +2,14 @@
  * @Author: Just be free
  * @Date:   2020-07-22 14:06:41
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-17 17:26:34
+ * @Last Modified time: 2020-12-03 16:15:14
  * @E-mail: justbefree@126.com
  */
 // declare let require: object;
 /* eslint-disable */
 const VALID_ENV = { production: "release", development: "dev", test: "test" };
 export const getEnvironment = (): keyof typeof VALID_ENV => {
-  return process.env.NODE_ENV;
+  return process.env.TARGET_ENVIRONMENT;
 };
 export const getAppConfig = (configName: string): string => {
   return process.env[configName];
