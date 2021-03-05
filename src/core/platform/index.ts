@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 10:02:44
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-17 10:39:14
+ * @Last Modified time: 2021-03-05 09:47:37
  * @E-mail: justbefree@126.com
  */
 import Vue from "vue";
@@ -26,13 +26,19 @@ class Platform {
     this._appStack.push(app);
     return this;
   }
-  public install(appName: string): void {
-    this.registerApplication(app.register(appName));
+  public install(appName: string | Array<string>): void {
+    if (appName && Array.isArray(appName)) {
+      (appName as Array<string>).forEach((name: string) => {
+        this.registerApplication(app.register(name));
+      });
+    } else {
+      this.registerApplication(app.register(appName));
+    }
   }
   public startUp(): void {
     const apps = this.getAppStack();
     Promise.all(apps).then(res => {
-      console.log(`Platform started ${res}`);
+      console.log(`Platform has started ${res}`);
       const router = app.getRouter();
       const store = app.getStore();
       const i18n = app.getI18n();

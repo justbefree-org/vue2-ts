@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-17 17:20:28
+ * @Last Modified time: 2021-03-04 18:48:58
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -44,7 +44,6 @@ class Application {
       strict: debug
     };
     const modules: Record<string, any> = { ...this.getModules() };
-
     StoreArr.forEach(s => {
       if (!hasProperty(modules, name)) {
         modules[name] = {};
@@ -63,8 +62,8 @@ class Application {
         ...modules[name]["getters"],
         ...s.getGetters()
       };
-      console.log(`The ${name} module has been registered`);
     });
+    console.log(`The ${name} module has been registered`);
     store["modules"] = modules;
     this._store = store;
   }
@@ -117,7 +116,18 @@ class Application {
     }
     return loadApplication(applicationName)
       .then(module => {
-        const application = module.default;
+        let application = {} as ApplicationObject;
+        if (module && Array.isArray(module)) {
+          const parentApplication = module[0].default;
+          const childApplication = module[1].default;
+          application = {
+            i18n: { ...parentApplication.i18n, ...childApplication.i18n },
+            name: parentApplication.name,
+            routes: [...parentApplication.routes, ...childApplication.routes]
+          };
+        } else {
+          application = module.default;
+        }
         this.registerStore(application.name);
         this.addApplication(application);
         this.processingMessages(application.name, application.i18n);
@@ -134,12 +144,26 @@ class Application {
   private registerStore(moduleName: string): void {
     const name: string = moduleName.toLocaleLowerCase();
     try {
-      const moduleStore: StoreManager[] = require(`@/applications/${moduleName}/store/index.ts`)[
+      const parentModuleStore: StoreManager[] = require(`@/applications/${moduleName}/store/index.ts`)[
         "default"
       ];
-      this.processingModule(name, moduleStore);
+      const childModuleStore: StoreManager[] = require(`@/overwrite/${moduleName}/store/index.ts`)[
+        "default"
+      ];
+      this.processingModule(name, [...parentModuleStore, ...childModuleStore]);
     } catch (err) {
-      console.log(err);
+      try {
+        const moduleStore: StoreManager[] = require(`@/applications/${moduleName}/store/index.ts`)[
+          "default"
+        ];
+        this.processingModule(name, moduleStore);
+      } catch (err) {
+        const moduleStore: StoreManager[] = require(`@/overwrite/${moduleName}/store/index.ts`)[
+          "default"
+        ];
+        console.log("overwrite module", moduleStore);
+        this.processingModule(name, moduleStore);
+      }
     }
   }
 

@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-21 11:45:15
+ * @Last Modified time: 2021-03-05 09:47:05
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -31,10 +31,16 @@ class StoreManager {
   }
   private setApi(): void {
     try {
-      this._API = require(`@/applications/${this._moduleName}/store`)["API"];
+      this._API = {
+        ...require(`@/overwrite/${this._moduleName}/store`)["API"],
+        ...require(`@/applications/${this._moduleName}/store`)["API"]
+      };
     } catch (err) {
-      this._API = {};
-      console.log(err);
+      try {
+        this._API = require(`@/applications/${this._moduleName}/store`)["API"];
+      } catch (err) {
+        this._API = {};
+      }
     }
   }
   private setState(states: AnyObject): void {
