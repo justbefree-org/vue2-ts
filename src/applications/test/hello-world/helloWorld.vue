@@ -19,11 +19,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from "vue-property-decorator";
-import Application from "@/Application";
+import { Component, Prop, BaseComponent } from "@/base";
 
 @Component
-export default class HelloWorld extends Application {
+export default class HelloWorld extends BaseComponent {
   @Prop() private msg!: string;
   public appName = "test";
 }

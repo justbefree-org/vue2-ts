@@ -70,9 +70,8 @@
 
 <script lang="ts">
 import "./style/index.scss";
-import { Component } from "vue-property-decorator";
+import { Component, BaseLayout } from "@/base";
 import { mapActions, mapState, mapGetters } from "vuex";
-import Application from "@/Application";
 
 @Component({
   methods: {
@@ -84,7 +83,7 @@ import Application from "@/Application";
     ...mapGetters("test", ["getNumber"])
   }
 })
-export default class About extends Application {
+export default class About extends BaseLayout {
   // public currentValue = 0;
   public results = "";
   increase!: (args: object) => void;

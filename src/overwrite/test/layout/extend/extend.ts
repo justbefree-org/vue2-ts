@@ -2,11 +2,11 @@
  * @Author: Just be free
  * @Date:   2021-03-04 10:17:52
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-03-04 10:57:52
+ * @Last Modified time: 2021-03-09 16:46:43
  * @E-mail: justbefree@126.com
  */
 // import "./style/index.scss";
-import { Component } from "vue-property-decorator";
+import { Component } from "@/base";
 import { CreateElement } from "vue";
 import SuperExtend from "@/applications/test/layout/extend";
 import Parent from "@/applications/test/parent";

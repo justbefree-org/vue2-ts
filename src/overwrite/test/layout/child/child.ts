@@ -2,12 +2,11 @@
  * @Author: Just be free
  * @Date:   2021-03-04 11:18:50
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-03-04 13:36:08
+ * @Last Modified time: 2021-03-09 16:46:22
  * @E-mail: justbefree@126.com
  */
 // import "./style/index.scss";
-import { Component } from "vue-property-decorator";
-import Application from "@/Application";
+import { Component, BaseLayout } from "@/base";
 import { CreateElement } from "vue";
 import { mapActions, mapState } from "vuex";
 import Parent from "@/applications/test/parent";
@@ -19,7 +18,7 @@ import Parent from "@/applications/test/parent";
     ...mapState("test", ["extendStore"])
   }
 })
-export default class Child extends Application {
+export default class Child extends BaseLayout {
   public appName = "test";
   changeText!: () => void;
   extendStore!: string;
