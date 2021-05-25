@@ -2,11 +2,11 @@
  * @Author: Just be free
  * @Date:   2020-08-06 15:55:08
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-19 11:38:12
+ * @Last Modified time: 2021-05-25 17:43:09
  * @E-mail: justbefree@126.com
  */
 
-import Component from "vue-class-component";
+import { Component } from "vue-property-decorator";
 // import BEM, { createBem, BemParserContext } from "@/core/utils/bem-class";
 import { BemParserContext } from "awesome-scss-bem/types";
 import BEM, { createBem } from "awesome-scss-bem";
