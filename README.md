@@ -1,4 +1,4 @@
-# yn-vue-ts
+# vue2-ts
 
 ## Project setup
 ```
