@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-07-30 16:19:31
+ * @Last Modified time: 2021-07-30 17:12:10
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -39,7 +39,7 @@ class StoreManager {
       try {
         this._API = require(`@/applications/${this._moduleName}/store`)["API"];
       } catch (err) {
-        this._API = {};
+        this._API = require(`@/custom/${this._moduleName}/store`)["API"];
       }
     }
   }
