@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-03-05 09:47:05
+ * @Last Modified time: 2021-07-30 16:19:31
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -32,7 +32,7 @@ class StoreManager {
   private setApi(): void {
     try {
       this._API = {
-        ...require(`@/overwrite/${this._moduleName}/store`)["API"],
+        ...require(`@/custom/${this._moduleName}/store`)["API"],
         ...require(`@/applications/${this._moduleName}/store`)["API"]
       };
     } catch (err) {

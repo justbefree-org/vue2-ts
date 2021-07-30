@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-03-04 18:48:58
+ * @Last Modified time: 2021-07-30 16:19:32
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -147,7 +147,7 @@ class Application {
       const parentModuleStore: StoreManager[] = require(`@/applications/${moduleName}/store/index.ts`)[
         "default"
       ];
-      const childModuleStore: StoreManager[] = require(`@/overwrite/${moduleName}/store/index.ts`)[
+      const childModuleStore: StoreManager[] = require(`@/custom/${moduleName}/store/index.ts`)[
         "default"
       ];
       this.processingModule(name, [...parentModuleStore, ...childModuleStore]);
@@ -158,10 +158,10 @@ class Application {
         ];
         this.processingModule(name, moduleStore);
       } catch (err) {
-        const moduleStore: StoreManager[] = require(`@/overwrite/${moduleName}/store/index.ts`)[
+        const moduleStore: StoreManager[] = require(`@/custom/${moduleName}/store/index.ts`)[
           "default"
         ];
-        console.log("overwrite module", moduleStore);
+        console.log("custom module", moduleStore);
         this.processingModule(name, moduleStore);
       }
     }
