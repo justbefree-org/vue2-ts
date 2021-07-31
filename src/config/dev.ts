@@ -8,5 +8,6 @@
 /* eslint-disable */
 module.exports = {
   version:
-    "The current version is dev20200820180843 from tag branch, published by Just be free"
+    "The current version is dev20200820180843 from tag branch, published by Just be free",
+  interceptAddress: require("./interceptAddress/dev")
 };
