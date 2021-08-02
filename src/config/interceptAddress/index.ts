@@ -1,8 +1,5 @@
 module.exports = {
-  timeoutApi: [
-    "/schedule/getStandardV2",
-    "/schedule/getStandard"
-  ],
+  timeoutApi: ["/schedule/getStandardV2", "/schedule/getStandard"],
   cancelApi: [
     "/travelStandard/getTravelStandard",
     "/schedule/getOrderParams",

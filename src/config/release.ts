@@ -8,5 +8,5 @@
 /* eslint-disable */
 module.exports = {
   version: "test data(can not be deleted)",
-  interceptAddress: require("./interceptAddress/release")
+  interceptAddress: require("./interceptAddress")
 };
