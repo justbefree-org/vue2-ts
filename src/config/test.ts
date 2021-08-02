@@ -7,5 +7,6 @@
  */
 /* eslint-disable */
 module.exports = {
-  version: "test data(can not be deleted)"
+  version: "test data(can not be deleted)",
+  interceptAddress: require("./interceptAddress")
 };

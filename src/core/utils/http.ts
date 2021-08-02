@@ -8,12 +8,14 @@
 import axios from "axios";
 import { AnyObject } from "../types";
 import * as qs from "qs";
+import { interceptor } from "@/core/utils/interceptor";
 const formData = () => {
   const instance = axios.create({
     headers: {
       "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
     }
   });
+  interceptor(instance);
   return instance;
 };
 
@@ -21,6 +23,7 @@ const json = () => {
   const instance = axios.create({
     headers: { "Content-Type": "application/json;charset=utf-8" }
   });
+  interceptor(instance);
   return instance;
 };
 
