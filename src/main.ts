@@ -1,3 +1,4 @@
+import "./hooks";
 import { logInfo } from "@/config";
 logInfo();
 import { default as Platform } from "@/core/Platform";
