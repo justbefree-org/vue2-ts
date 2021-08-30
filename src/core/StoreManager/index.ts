@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-07-30 17:12:10
+ * @Last Modified time: 2021-08-30 11:52:30
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -62,6 +62,10 @@ class StoreManager {
     console.log("http params modifer", args);
     return args;
   }
+  protected setRequestHeaders(uri: string, params: AnyObject): AnyObject {
+    console.log("set http request headers");
+    return {};
+  }
   public action(
     actionName: string,
     async = false,
@@ -76,7 +80,8 @@ class StoreManager {
         const { params } = args;
         return Http(method)(
           this._API[actionName],
-          this.httpParamsModifier(params)
+          this.httpParamsModifier(params),
+          this.setRequestHeaders(this._API[actionName], params)
         )
           .then(res => {
             if (this.hasMutation(actionName)) {

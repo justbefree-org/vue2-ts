@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-08-20 17:04:29
  * @Last Modified by:   Just be free
- * @Last Modified time: 2020-08-20 17:30:49
+ * @Last Modified time: 2021-08-30 11:51:45
  * @E-mail: justbefree@126.com
  */
 import { AnyObject } from "./core/types";
@@ -19,6 +19,15 @@ class Store extends StoreManager {
   }
   protected httpParamsModifier(args: AnyObject): AnyObject {
     return args;
+  }
+  protected setRequestHeaders(uri: string, params: AnyObject): AnyObject {
+    console.log("地址是", uri, "参数是", params);
+    return {
+      headers: {
+        userId: "3075",
+        name: "test"
+      }
+    };
   }
 }
 export default Store;
