@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-07-30 16:19:32
+ * @Last Modified time: 2021-09-02 18:46:45
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -161,7 +161,6 @@ class Application {
         const moduleStore: StoreManager[] = require(`@/custom/${moduleName}/store/index.ts`)[
           "default"
         ];
-        console.log("custom module", moduleStore);
         this.processingModule(name, moduleStore);
       }
     }
