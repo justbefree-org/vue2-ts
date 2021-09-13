@@ -8,11 +8,14 @@
 import { Component, Prop, BaseComponent } from "@/base";
 import { CreateElement } from "vue";
 
-@Component
-export default class Parent extends BaseComponent {
-  @Prop() public msg!: string;
-  public appName = "test";
-  render(h: CreateElement) {
-    return h("div", {}, "这个是父类");
+export default new Promise<any>(resolve => {
+  @Component
+  class Parent extends BaseComponent {
+    @Prop() public msg!: string;
+    public appName = "test";
+    render(h: CreateElement) {
+      return h("div", {}, "这个是父类");
+    }
   }
-}
+  resolve(Parent);
+});

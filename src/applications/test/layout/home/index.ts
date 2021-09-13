@@ -6,5 +6,5 @@
  * @E-mail: justbefree@126.com
  */
 
-import Home from "./home.vue";
-export default Home;
+export default () =>
+  import(/* webpackChunkName: "applicationHome" */ "./home.vue");

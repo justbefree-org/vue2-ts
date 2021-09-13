@@ -5,5 +5,5 @@
  * @Last Modified time: 2020-07-31 10:47:46
  * @E-mail: justbefree@126.com
  */
-import HelloWorld from "./helloWorld.vue";
-export default HelloWorld;
+export default () =>
+  import(/* webpackChunkName: "applicationHelloWorld" */ "./helloWorld.vue");

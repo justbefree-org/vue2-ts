@@ -9,10 +9,13 @@ import { Component, Prop } from "@/base";
 import SuperParent from "@/applications/test/parent/component";
 import { CreateElement } from "vue";
 
-@Component
-export default class Parent extends SuperParent {
-  public appName = "test";
-  render(h: CreateElement) {
-    return h("div", {}, `这个是子类继承的父类 - ${this.msg}`);
+export default new Promise(resolve => {
+  @Component
+  class Parent extends SuperParent {
+    public appName = "test";
+    render(h: CreateElement) {
+      return h("div", {}, `这个是子类继承的父类 - ${this.msg}`);
+    }
   }
-}
+  resolve(Parent);
+});
