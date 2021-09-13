@@ -5,6 +5,9 @@
  * @Last Modified time: 2021-03-03 18:08:01
  * @E-mail: justbefree@126.com
  */
-import { r } from "@/lib/import";
-const Parent = r("test", "parent");
-export default Parent;
+// import { r } from "@/lib/import";
+// const Parent = r("test", "parent");
+export default () =>
+  import(/* webpackChunkName: "applicationParent" */ "./parent").then(res => {
+    return res.default;
+  });

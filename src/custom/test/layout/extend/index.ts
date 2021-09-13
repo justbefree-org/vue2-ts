@@ -6,5 +6,7 @@
  * @E-mail: justbefree@126.com
  */
 
-import Extend from "./extend";
-export default Extend;
+export default () =>
+  import(/* webpackChunkName: "overwriteExtend" */ "./extend").then(res => {
+    return res.default;
+  });

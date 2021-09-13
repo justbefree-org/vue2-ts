@@ -46,14 +46,8 @@ export const loadComponent = (path: string) => {
     hascustom = false;
   }
   if (hascustom) {
-    return () =>
-      import(
-        /* webpackChunkName: "[request]" */ `@/custom/${path}/index.ts`
-      );
+    return require(`@/custom/${path}/index.ts`).default;
   } else {
-    return () =>
-      import(
-        /* webpackChunkName: "[request]" */ `@/applications/${path}/index.ts`
-      );
+    return require(`@/applications/${path}/index.ts`).default;
   }
 };

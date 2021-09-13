@@ -8,23 +8,27 @@
 // import "./style/index.scss";
 import { Component } from "@/base";
 import { CreateElement } from "vue";
-import SuperExtend from "@/applications/test/layout/extend";
+import SuperExtendFun from "@/applications/test/layout/extend";
 import Parent from "@/applications/test/parent";
-@Component
-export default class Extend extends SuperExtend {
-  test() {
-    console.log("this is extend test, child class rewrite the method");
+export default SuperExtendFun().then(res => {
+  const SuperExtend = res;
+  @Component
+  class Extend extends SuperExtend {
+    test() {
+      console.log("this is extend test, child class rewrite the method");
+    }
+    render(h: CreateElement) {
+      return h("div", {}, [
+        h("h2", {}, "this is child class , extend examples"),
+        h("button", { on: { click: this.test } }, "click me!"),
+        h(
+          "div",
+          {},
+          `这个是重写后的i18n词条 - ${this.getProperLanguage("extend")}`
+        ),
+        h(Parent, { props: { msg: "this is message from child class" } }, [])
+      ]);
+    }
   }
-  render(h: CreateElement) {
-    return h("div", {}, [
-      h("h2", {}, "this is child class , extend examples"),
-      h("button", { on: { click: this.test } }, "click me!"),
-      h(
-        "div",
-        {},
-        `这个是重写后的i18n词条 - ${this.getProperLanguage("extend")}`
-      ),
-      h(Parent, { props: { msg: "this is message from child class" } }, [])
-    ]);
-  }
-}
+  return Extend;
+});

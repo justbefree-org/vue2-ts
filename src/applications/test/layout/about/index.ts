@@ -6,5 +6,5 @@
  * @E-mail: justbefree@126.com
  */
 
-import About from "./about.vue";
-export default About;
+export default () =>
+  import(/* webpackChunkName: "applicationAbout" */ "./about.vue");

@@ -6,5 +6,5 @@
  * @E-mail: justbefree@126.com
  */
 
-import Child from "./child";
+const Child = () => import(/* webpackChunkName: "overwriteChild" */ `./child`);
 export default Child;
