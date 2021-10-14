@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-10-14 12:26:54
+ * @Last Modified time: 2021-10-14 14:54:19
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -69,8 +69,8 @@ class StoreManager {
     return {};
   }
   protected mergeConfig(uri: string, params: AnyObject): AnyObject {
-    const headers = this.setRequestHeaders(uri, params);
-    return { ...this._axiosConfig, headers };
+    const config = this.setRequestHeaders(uri, params);
+    return { ...this._axiosConfig, ...config };
   }
   public action(
     actionName: string,
