@@ -2,12 +2,16 @@
  * @Author: Just be free
  * @Date:   2020-07-30 13:43:52
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-05-25 17:42:45
+ * @Last Modified time: 2021-10-14 14:41:48
  * @E-mail: justbefree@126.com
  */
 
 import { Vue, Component } from "vue-property-decorator";
 import { AnyObject } from "../types";
+interface GetProperLanguageFirstArg {
+  appName: string;
+  key: string;
+}
 // import { createBem, BemConstructorContext } from "../utils/bem";
 // import { BemConstructorContext } from "awesome-bem-scss/types";
 // import { createBem } from "awesome-bem-scss";
@@ -16,11 +20,17 @@ import { AnyObject } from "../types";
 @Component
 export default class Super extends Vue {
   public appName = "";
-  getProperLanguage(key: string, inject: AnyObject = {}) {
-    // console.log(this.$options.name, this.appName);
-    const keyPath = `${this.appName}.${this.$options.name}.${key}`;
-    // console.log(this.$te(`${keyPath}`));
-    return this.$t(keyPath, inject);
+  getProperLanguage(
+    key: string | GetProperLanguageFirstArg,
+    inject: AnyObject = {}
+  ) {
+    let keyPath = "";
+    if (typeof key === "string") {
+      keyPath = `${this.appName}.${this.$options.name}.${key}`;
+    } else {
+      keyPath = `${key.appName}.${this.$options.name}.${key.key}`;
+    }
+    return this.$t(keyPath, inject) as string;
   }
   changeLanguage(lang: string): void {
     this.$i18n.locale = lang;
