@@ -2,14 +2,14 @@
  * @Author: Just be free
  * @Date:   2020-08-20 17:04:29
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-08-30 11:51:45
+ * @Last Modified time: 2021-10-14 12:24:02
  * @E-mail: justbefree@126.com
  */
 import { AnyObject } from "./core/types";
 import StoreManager from "@/core/StoreManager";
 class Store extends StoreManager {
-  constructor(moduleName: string) {
-    super(moduleName);
+  constructor(moduleName: string, axiosConfig?: AnyObject) {
+    super(moduleName, axiosConfig);
   }
   protected httpSuccessCallback(args: AnyObject | string): void {
     console.log("继承后的http success callback", args);

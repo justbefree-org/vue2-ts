@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-28 15:22:10
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-09-08 14:09:08
+ * @Last Modified time: 2021-10-14 12:19:30
  * @E-mail: justbefree@126.com
  */
 import axios from "axios";
@@ -10,23 +10,29 @@ import { AnyObject } from "../types";
 import * as qs from "qs";
 import { interceptor } from "@/core/utils/interceptor";
 const formData = (config: AnyObject, type?: string) => {
+  const headers = config.headers;
+  delete config.headers;
   const contentType = type || "application/x-www-form-urlencoded;charset=utf-8";
   const instance = axios.create({
     headers: {
       "Content-Type": contentType,
-      ...config.headers
-    }
+      ...headers
+    },
+    ...config
   });
   interceptor(instance);
   return instance;
 };
 
 const json = (config: AnyObject) => {
+  const headers = config.headers;
+  delete config.headers;
   const instance = axios.create({
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      ...config.headers
-    }
+      ...headers
+    },
+    ...config
   });
   interceptor(instance);
   return instance;

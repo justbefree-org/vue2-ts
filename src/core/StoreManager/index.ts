@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-27 16:02:38
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-08-30 11:52:30
+ * @Last Modified time: 2021-10-14 12:26:54
  * @E-mail: justbefree@126.com
  */
 import { APIobject, State } from "./types";
@@ -19,7 +19,8 @@ class StoreManager {
   private _action: AnyObject;
   private _mutation: AnyObject;
   private _getters: AnyObject;
-  constructor(moduleName: string) {
+  private _axiosConfig: AnyObject;
+  constructor(moduleName: string, axiosConfig: AnyObject = {}) {
     this._moduleName = moduleName;
     this._actionName = "";
     this._API = {};
@@ -27,6 +28,7 @@ class StoreManager {
     this._action = {};
     this._mutation = {};
     this._getters = {};
+    this._axiosConfig = axiosConfig;
     this.setApi();
   }
   private setApi(): void {
@@ -66,6 +68,10 @@ class StoreManager {
     console.log("set http request headers");
     return {};
   }
+  protected mergeConfig(uri: string, params: AnyObject): AnyObject {
+    const headers = this.setRequestHeaders(uri, params);
+    return { ...this._axiosConfig, headers };
+  }
   public action(
     actionName: string,
     async = false,
@@ -81,7 +87,7 @@ class StoreManager {
         return Http(method)(
           this._API[actionName],
           this.httpParamsModifier(params),
-          this.setRequestHeaders(this._API[actionName], params)
+          this.mergeConfig(this._API[actionName], params)
         )
           .then(res => {
             if (this.hasMutation(actionName)) {
