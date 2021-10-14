@@ -10,6 +10,9 @@
     </p>
     <div>
       <span>i18n - {{ this.getProperLanguage("name") }}</span>
+      <p>
+        {{ arr }}
+      </p>
     </div>
     <div>
       <button @click="changeLanguage('zh-CN')">中文</button>
@@ -25,6 +28,7 @@ import { Component, Prop, BaseComponent } from "@/base";
 export default class HelloWorld extends BaseComponent {
   @Prop() private msg!: string;
   public appName = "test";
+  public arr = this.getProperLanguage({ appName: "test", key: "arr" });
 }
 </script>
 
