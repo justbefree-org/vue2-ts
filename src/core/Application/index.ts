@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-09-02 18:46:45
+ * @Last Modified time: 2021-10-14 16:24:33
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -179,7 +179,7 @@ class Application {
 
   public getRouter() {
     const routes = this.getRoutes();
-    return new VueRouter({ mode: "history", routes });
+    return new VueRouter({ mode: "hash", routes });
   }
 
   public getI18n() {
