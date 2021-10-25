@@ -1,18 +1,20 @@
 <template>
   <div>
     <h2>applications extend examples</h2>
+    <h3>
+      这个是父类
+    </h3>
     <span></span>
     <button @click="test">click me</button>
-    <!-- <parent></parent> -->
+    <parent></parent>
   </div>
 </template>
 <script lang="ts">
   import { BaseLayout, Component } from "@/base";
   import Parent from "@/applications/test/parent";
-  console.log(Parent);
   @Component({
     name: "Extend",
-    // components: { Parent }
+    components: { Parent }
   })
   export default class Extend extends BaseLayout {
     test() {
