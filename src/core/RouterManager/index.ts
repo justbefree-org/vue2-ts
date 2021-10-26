@@ -2,10 +2,10 @@
  * @Author: Just be free
  * @Date:   2020-07-22 15:40:12
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-03-04 18:27:02
+ * @Last Modified time: 2021-10-26 11:19:11
  * @E-mail: justbefree@126.com
  */
-import { loadComponent } from "../utils/load";
+import { loadRouteComponent } from "../utils/load";
 import { RouteConfig } from "vue-router";
 class RouterManager {
   private baseDir: string;
@@ -39,7 +39,7 @@ class RouterManager {
       }
       if (route.pathName) {
         const path = `${this.getBaseDir()}/${route.pathName}`;
-        route.component = loadComponent(path);
+        route.component = loadRouteComponent(path);
         delete route.pathName;
         if (route.children && route.children.length > 0) {
           this.register(route.children);
