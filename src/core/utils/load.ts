@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 09:59:15
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-10-25 18:05:35
+ * @Last Modified time: 2021-10-27 18:50:02
  * @E-mail: justbefree@126.com
  */
 
@@ -33,15 +33,10 @@ export const loadApplication = (path: string) => {
   }
 };
 
-export const loadComponent = (path: string, componentName?: string) => {
+export const loadComponent = (path: string) => {
   const routerTypeComponent = path.indexOf("layout") > -1;
-  let cn = componentName;
   // const com = () => import( webpackChunkName: "index" `@/applications/common/${path}/index.js`)
   // 使用[request]来告诉webpack，这里的值是根据后面传入的字符串来决定，本例中就是变量path的值
-  if (!componentName) {
-    const index = path.lastIndexOf("/");
-    cn = path.substring(index + 1);
-  }
   let hascustom = false;
   try {
     require(`@/custom/${path}/index.ts`);
@@ -57,7 +52,7 @@ export const loadComponent = (path: string, componentName?: string) => {
     if (routerTypeComponent) {
       return require(`@/applications/${path}/index.ts`).default;
     } else {
-      return require(`@/applications/${path}/${cn}.vue`).default;
+      return require(`@/applications/${path}/default.ts`).default;
     }
   }
 };
