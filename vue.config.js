@@ -2,10 +2,10 @@
  * @Author: Just be free
  * @Date:   2020-07-29 10:45:08
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-10-28 13:39:19
+ * @Last Modified time: 2021-10-28 13:47:48
  * @E-mail: justbefree@126.com
  */
-const publicPath = process.env.NODE_ENV === 'production' ? "/vue2-ts/" : "/";
+const publicPath = process.env.NODE_ENV === 'production' ? "/" : "/";
 module.exports = {
   publicPath,
   css: {
