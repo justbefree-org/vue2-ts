@@ -2,12 +2,13 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-10-22 18:20:09
+ * @Last Modified time: 2021-11-03 18:06:47
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
 import { StoreOptions } from "vuex/types";
 import { default as StoreManager } from "../StoreManager";
+import { default as I18n } from "../I18n";
 import { ApplicationObject } from "./types";
 import { AnyObject } from "../types";
 import { RouteConfig } from "vue-router";
@@ -120,8 +121,10 @@ class Application {
         if (module && Array.isArray(module)) {
           const parentApplication = module[0].default;
           const childApplication = module[1].default;
+          const p = new I18n(parentApplication.i18n);
+          const c = new I18n(childApplication.i18n);
           application = {
-            i18n: { ...parentApplication.i18n, ...childApplication.i18n },
+            i18n: p.merge(c),
             name: parentApplication.name,
             routes: [...parentApplication.routes, ...childApplication.routes]
           };
