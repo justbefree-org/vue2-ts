@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-30 13:43:52
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-10-14 14:41:48
+ * @Last Modified time: 2021-11-12 14:09:07
  * @E-mail: justbefree@126.com
  */
 
@@ -30,7 +30,7 @@ export default class Super extends Vue {
     } else {
       keyPath = `${key.appName}.${this.$options.name}.${key.key}`;
     }
-    return this.$t(keyPath, inject) as string;
+    return this.$t(keyPath, inject) as any;
   }
   changeLanguage(lang: string): void {
     this.$i18n.locale = lang;
