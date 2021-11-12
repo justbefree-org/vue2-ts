@@ -2,12 +2,10 @@ import "./hooks";
 import { logInfo } from "@/config";
 logInfo();
 import { default as Platform } from "@/core/Platform";
-import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import { customApps } from "@/custom";
 import { Route, NavigationGuardNext } from "vue-router/types/router";
-Vue.config.productionTip = false;
 
 const p = new Platform({ id: "#app", App });
 p.registerRouterHooks("beforeEach", (from: Route, to: Route, next: NavigationGuardNext) => {
