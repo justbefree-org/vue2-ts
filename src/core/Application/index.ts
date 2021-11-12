@@ -2,7 +2,7 @@
  * @Author: Just be free
  * @Date:   2020-07-22 13:36:56
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-11-03 18:06:47
+ * @Last Modified time: 2021-11-12 13:55:34
  * @E-mail: justbefree@126.com
  */
 declare let require: any;
@@ -19,6 +19,7 @@ import { hasProperty, camelize } from "../utils";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
+import { polyfill } from "../RouterManager/polyfill";
 import VueI18n from "vue-i18n";
 
 class Application {
@@ -73,6 +74,7 @@ class Application {
   }
   private installVueRouter(): void {
     Vue.use(VueRouter);
+    polyfill(VueRouter);
   }
   private installVuex(): void {
     Vue.use(Vuex);
