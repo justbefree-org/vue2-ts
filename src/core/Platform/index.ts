@@ -2,10 +2,10 @@
  * @Author: Just be free
  * @Date:   2020-07-22 10:02:44
  * @Last Modified by:   Just be free
- * @Last Modified time: 2021-10-22 18:49:19
+ * @Last Modified time: 2021-11-12 17:05:59
  * @E-mail: justbefree@126.com
  */
-import Vue from "vue";
+import Vue, { VueConstructor } from "vue";
 import { Component } from "../types";
 import { PlatformConstructorParams } from "./types";
 import { default as Application } from "../Application";
@@ -31,6 +31,9 @@ class Platform {
   }
   public registerRouterHooks(hookName: RouterHooksName, event: any): void {
     this._routerHooks.push({ hookName, event });
+  }
+  public getVue(): VueConstructor {
+    return Vue;
   }
   public install(appName: string | Array<string>): void {
     if (appName && Array.isArray(appName)) {
