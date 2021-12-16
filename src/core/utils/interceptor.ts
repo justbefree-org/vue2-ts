@@ -20,12 +20,11 @@ export const interceptor = (instance: any) => {
   instance.interceptors.request.use(
     (config: any) => {
       const { url } = config;
-      const interceptAddress = getConfig("interceptAddress");
-      const { cancelApi, timeoutApi } = interceptAddress as AnyObject;
-      if (timeoutApi.includes(url)) {
+      const interceptAddress = getConfig("interceptAddress") as AnyObject;
+      if (interceptAddress.timeoutApi.includes(url)) {
         config.timeout = 60 * 1000;
       }
-      if (cancelApi.some((aUrl: string) => url.includes(aUrl))) {
+      if (interceptAddress.cancelApi.some((aUrl: string) => url.includes(aUrl))) {
         config.cancelToken = new axios.CancelToken(cancel => {
           cancelApi.pushToCancelApi(cancel);
         });
